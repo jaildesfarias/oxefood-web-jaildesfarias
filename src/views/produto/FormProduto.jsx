@@ -28,15 +28,18 @@ export default function FormProduto () {
                                     fluid
                                     label='titulo'
                                     maxLength="100"
+                                     placeholder="Informe o título do produto"
                                 />
 
                                 <Form.Input
                                     required
                                     fluid
                                     label='codigo de produto'>
+                                        
                                          <InputMask
                                         required
                                         mask="informe o titulo do produto"
+                                         placeholder="Informe o título do produto"
                                     /> 
                                      
                                 </Form.Input>
@@ -47,7 +50,7 @@ export default function FormProduto () {
 
                                 <Form.Input fluid width={13} label='Descrição'>
                                        
-                                    <TextArea placeholder='Tell us more' />
+                                    <TextArea placeholder='Informe a descrição do produto' />
 
                                 </Form.Input>
 
@@ -56,6 +59,7 @@ export default function FormProduto () {
 
                             <Form.Group>
                                 <Form.Input
+                                required
                                     fluid
                                     label='Valor Unitário'
                                     width={6}
@@ -66,13 +70,26 @@ export default function FormProduto () {
                                 <Form.Input
                                     fluid
                                      label='Tempo de Entrega Mínimo em Minuto'
-                                    width={40}
+                                    width={6}
                                 >
                                     <InputMask 
                                         mask="99/99/9999" 
                                         maskChar={null}
-                                        placeholder="Ex: 20/03/1985"
+                                        placeholder="30"
                                     /> 
+                                    
+                                </Form.Input>
+                                <Form.Input
+                                    fluid
+                                     label='Tempo de Entrega Máximo em Minutos'
+                                    width={6}
+                                >
+                                    <InputMask 
+                                        mask="99/99/9999" 
+                                        maskChar={null}
+                                        placeholder="40"
+                                    /> 
+                                    
                                 </Form.Input>
 
                             </Form.Group>
