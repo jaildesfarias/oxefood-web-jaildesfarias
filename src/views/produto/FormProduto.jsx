@@ -3,7 +3,7 @@ import React from "react";
 import InputMask from 'react-input-mask';
 import { Button, Container, Divider, Form, Icon,TextArea } from 'semantic-ui-react';
 
-export default function FormProduto () {
+export default function FormEntregador () {
 
     return (
 
@@ -13,7 +13,7 @@ export default function FormProduto () {
 
                 <Container textAlign='justified' >
 
-                    <h2> <span style={{color: 'darkgray'}}> Produto &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro </h2>
+                    <h2> <span style={{color: 'darkgray'}}> Entregador &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro </h2>
 
                     <Divider />
 
@@ -26,18 +26,35 @@ export default function FormProduto () {
                                 <Form.Input
                                     required
                                     fluid
-                                    label='titulo'
+                                    label='nome'
                                     maxLength="100"
                                 />
 
-                                <Form.Input
-                                    required
-                                    fluid
-                                    label='codigo de produto'>
+                                            <Form.Input
+                                                required
+                                                fluid
+                                                label='CPF'
+                                                
+                                            >
+                                                <InputMask 
+                                                    mask="999.999.999-99"
+                                                    placeholder="000.000.000-00"
+                                                />
+                                            <Form.Input
+                                                 required
+                                                 fluid
+                                                 label='RG'
+                                                        >
+                                             <InputMask 
+                                                 mask="99.999.999-9"
+                                                 placeholder="00.000.000-0"
+                                                />
+                                           </Form.Input>
                                          <InputMask
                                         required
                                         mask="informe o titulo do produto"
                                     /> 
+                                    
                                      
                                 </Form.Input>
 
@@ -53,7 +70,6 @@ export default function FormProduto () {
 
                             </Form.Group>
                                
-
                             <Form.Group>
                                 <Form.Input
                                     fluid
@@ -65,8 +81,8 @@ export default function FormProduto () {
 
                                 <Form.Input
                                     fluid
-                                     label='Tempo de Entrega Mínimo em Minuto'
-                                    width={40}
+                                    label='Tempo de Entrega Mínimo em Minuto'
+                                    width={60}
                                 >
                                     <InputMask 
                                         mask="99/99/9999" 

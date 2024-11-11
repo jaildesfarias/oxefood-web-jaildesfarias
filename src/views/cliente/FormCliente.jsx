@@ -1,8 +1,44 @@
-import React from "react";
+
+import React, { useState } from "react";
+import InputMask from 'react-input-mask';
+import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
+
+        const [nome, setNome] = useState();
+        const [cpf, setCpf] = useState();
+        const [dataNascimento, setDataNascimento] = useState();
+        const [foneCelular, setFoneCelular] = useState();
+        const [foneFixo, setFoneFixo] = useState();
+
+        function salvar() {
+
+		let clienteRequest = {
+		     nome: nome,
+		     cpf: cpf,
+		     dataNascimento: dataNascimento,
+		     foneCelular: foneCelular,
+		     foneFixo: foneFixo
+		}
+	
+		axios.post("http://localhost:8080/api/cliente", clienteRequest)
+		.then((response) => {
+		     console.log('Cliente cadastrado com sucesso.')
+		})
+		.catch((error) => {
+		     console.log('Erro ao incluir o um cliente.')
+		})
+	}
+
+
 import InputMask from 'react-input-mask';
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 
 export default function FormCliente () {
+        const [nome, setNome] = useState();
+        const [cpf, setCpf] = useState();
+        const [dataNascimento, setDataNascimento] = useState();
+        const [foneCelular, setFoneCelular] = useState();
+        const [foneFixo, setFoneFixo] = useState();
+
 
     return (
 
@@ -27,6 +63,8 @@ export default function FormCliente () {
                                     fluid
                                     label='Nome'
                                     maxLength="100"
+                                    value={nome}
+		                        	onChange={e => setNome(e.target.value)}
                                 />
 
                                 <Form.Input
@@ -36,6 +74,8 @@ export default function FormCliente () {
                                     <InputMask
                                         required
                                         mask="999.999.999-99"
+                                        value={cpf}
+			                         	onChange={e => setCpf(e.target.value)} 
                                     /> 
                                 </Form.Input>
 
@@ -58,6 +98,7 @@ export default function FormCliente () {
                                     width={6}>
                                     <InputMask 
                                         mask="(99) 9999.9999"
+                                        value={nome}
                                     /> 
                                 </Form.Input>
 
@@ -80,12 +121,14 @@ export default function FormCliente () {
                         <div style={{marginTop: '4%'}}>
 
                             <Button
-                                type="button"
                                 inverted
                                 circular
                                 icon
                                 labelPosition='left'
-                                color='orange'
+                                color='blue'
+				                floated='right'
+                                onClick={() => salvar()}
+
                             >
                                 <Icon name='reply' />
                                 Voltar
