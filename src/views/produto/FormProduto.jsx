@@ -1,13 +1,13 @@
-
 import React from "react";
 import InputMask from 'react-input-mask';
-import { Button, Container, Divider, Form, Icon,TextArea } from 'semantic-ui-react';
+import { Button, Container, Divider, Form, Icon, TextArea } from 'semantic-ui-react';
 
 export default function FormEntregador () {
 
     return (
 
         <div>
+               <MenuSistema tela={'cliente'} />
 
             <div style={{marginTop: '3%'}}>
 
@@ -26,46 +26,31 @@ export default function FormEntregador () {
                                 <Form.Input
                                     required
                                     fluid
-                                    label='nome'
+                                    label='Nome'
                                     maxLength="100"
-                                     placeholder="Informe o título do produto"
+                                    placeholder="Informe o nome do entregador"
                                 />
 
-<<<<<<< HEAD
-                                            <Form.Input
-                                                required
-                                                fluid
-                                                label='CPF'
-                                                
-                                            >
-                                                <InputMask 
-                                                    mask="999.999.999-99"
-                                                    placeholder="000.000.000-00"
-                                                />
-                                            <Form.Input
-                                                 required
-                                                 fluid
-                                                 label='RG'
-                                                        >
-                                             <InputMask 
-                                                 mask="99.999.999-9"
-                                                 placeholder="00.000.000-0"
-                                                />
-                                           </Form.Input>
-=======
                                 <Form.Input
                                     required
                                     fluid
-                                    label='codigo de produto'>
-                                        
->>>>>>> f624963e8467819ca127acd53433b547b3548ea6
-                                         <InputMask
-                                        required
-                                        mask="informe o titulo do produto"
-                                         placeholder="Informe o título do produto"
-                                    /> 
-                                    
-                                     
+                                    label='CPF'
+                                >
+                                    <InputMask 
+                                        mask="999.999.999-99"
+                                        placeholder="000.000.000-00"
+                                    />
+                                </Form.Input>
+
+                                <Form.Input
+                                    required
+                                    fluid
+                                    label='RG'
+                                >
+                                    <InputMask 
+                                        mask="99.999.999-9"
+                                        placeholder="00.000.000-0"
+                                    />
                                 </Form.Input>
 
                             </Form.Group>
@@ -73,51 +58,41 @@ export default function FormEntregador () {
                             <Form.Group widths='equal'>
 
                                 <Form.Input fluid width={13} label='Descrição'>
-                                       
-                                    <TextArea placeholder='Informe a descrição do produto' />
-
+                                    <TextArea placeholder='Informe a descrição do entregador' />
                                 </Form.Input>
 
                             </Form.Group>
                                
                             <Form.Group>
                                 <Form.Input
-                                required
+                                    required
                                     fluid
                                     label='Valor Unitário'
                                     width={6}
-                                    > 
-                                   
+                                />
+
+                                <Form.Input
+                                    fluid
+                                    label='Tempo de Entrega Mínimo em Minutos'
+                                    width={6}
+                                >
+                                    <InputMask 
+                                        mask="99"
+                                        maskChar={null}
+                                        placeholder="30"
+                                    /> 
                                 </Form.Input>
 
                                 <Form.Input
                                     fluid
-<<<<<<< HEAD
-                                    label='Tempo de Entrega Mínimo em Minuto'
-                                    width={60}
-=======
-                                     label='Tempo de Entrega Mínimo em Minuto'
-                                    width={6}
->>>>>>> f624963e8467819ca127acd53433b547b3548ea6
-                                >
-                                    <InputMask 
-                                        mask="99/99/9999" 
-                                        maskChar={null}
-                                        placeholder="30"
-                                    /> 
-                                    
-                                </Form.Input>
-                                <Form.Input
-                                    fluid
-                                     label='Tempo de Entrega Máximo em Minutos'
+                                    label='Tempo de Entrega Máximo em Minutos'
                                     width={6}
                                 >
                                     <InputMask 
-                                        mask="99/99/9999" 
+                                        mask="99"
                                         maskChar={null}
                                         placeholder="40"
                                     /> 
-                                    
                                 </Form.Input>
 
                             </Form.Group>
@@ -145,6 +120,7 @@ export default function FormEntregador () {
                                 labelPosition='left'
                                 color='blue'
                                 floated='right'
+                                
                             >
                                 <Icon name='save' />
                                 Salvar

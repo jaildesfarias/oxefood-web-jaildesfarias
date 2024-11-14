@@ -3,15 +3,17 @@ import './App.css';
 import Home from './views/home/Home';
 import FormProduto from './views/produto/FormProduto';
 import FormEntregador from './views/entregador/FormEntregador';
+import FormCliente from './views/cliente/FormCliente';
+import Rotas from './Rotas';
+
 
 function App() {
 
   return (
 
     <div className="App">
-      
-      <FormEntregador />
-
+       <Rotas />
+    
       <div style={{marginTop: '6%'}}>
         <Segment vertical color='grey' size='tiny' textAlign='center'>
           &copy; 2023 - Projeto WEB III - IFPE Jaboatão dos Guararapes

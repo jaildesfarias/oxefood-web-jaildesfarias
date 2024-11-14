@@ -1,15 +1,18 @@
 
 import React, { useState } from "react";
+import axios from "axios";
 import InputMask from 'react-input-mask';
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 
-        const [nome, setNome] = useState();
-        const [cpf, setCpf] = useState();
-        const [dataNascimento, setDataNascimento] = useState();
-        const [foneCelular, setFoneCelular] = useState();
-        const [foneFixo, setFoneFixo] = useState();
 
-        function salvar() {
+export default function FormCliente () {
+    const [nome, setNome] = useState();
+    const [cpf, setCpf] = useState();
+    const [dataNascimento, setDataNascimento] = useState();
+    const [foneCelular, setFoneCelular] = useState();
+    const [foneFixo, setFoneFixo] = useState();
+
+    function salvar() {
 
 		let clienteRequest = {
 		     nome: nome,
@@ -27,22 +30,11 @@ import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
 		     console.log('Erro ao incluir o um cliente.')
 		})
 	}
-
-
-import InputMask from 'react-input-mask';
-import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
-
-export default function FormCliente () {
-        const [nome, setNome] = useState();
-        const [cpf, setCpf] = useState();
-        const [dataNascimento, setDataNascimento] = useState();
-        const [foneCelular, setFoneCelular] = useState();
-        const [foneFixo, setFoneFixo] = useState();
-
-
     return (
 
         <div>
+            <MenuSistema tela={'cliente'} />
+
 
             <div style={{marginTop: '3%'}}>
 
@@ -72,7 +64,6 @@ export default function FormCliente () {
                                     fluid
                                     label='CPF'>
                                     <InputMask
-                                        required
                                         mask="999.999.999-99"
                                         value={cpf}
 			                         	onChange={e => setCpf(e.target.value)} 

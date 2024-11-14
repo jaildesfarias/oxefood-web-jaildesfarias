@@ -4,10 +4,27 @@ import InputMask from 'react-input-mask';
 import { Button, Container, Divider, Form, FormGroup, Icon,Select,TextArea } from 'semantic-ui-react';
 
 export default function FormEntregador () {
-
-    return (
+   
+        const [nome, setNome] = useState();
+        const [cpf, setCpf] = useState();
+        const [dataNascimento, setDataNascimento] = useState();
+        const [foneCelular, setFoneCelular] = useState();
+        const [foneFixo, setFoneFixo] = useState();
+        const [qtdEntregador, setQtdEntregador] = useState();
+        const [valorFrete, setValorFrete] = useState();
+        const [enderecoRua, setEnderecoRua] = useState();
+        const [enderecoCompleto, setEnderecooCompleto] = useState();
+        const [enderecoNumero, set[EnderecoNumero] = useState();
+        const [enderecoBairro, set[EnderecoBairro] = useState();
+        const [enderecoCidade, set[enderecoCidade] = useState();  
+        const [enderecoCep, set[enderecoCep] = useState();  
+        const [enderecoUf, set[EnderecoUf] = useState(); 
+        const [ativo, set[Ativo] = useState(); 
+    
+        return (
 
         <div>
+               <MenuSistema tela={'cliente'} />
 
             <div style={{marginTop: '3%'}}>
 
@@ -61,7 +78,7 @@ export default function FormEntregador () {
                             <Form.Input
                                
                                     fluid
-                                    label='DT Nacimento'
+                                    label='DataNacimento'
                                     width={2}
                                     > 
                                 </Form.Input>
@@ -71,7 +88,7 @@ export default function FormEntregador () {
                                     label='Fone Celular '
                                     width={4}
                                     > 
-                                   
+                                
                                 </Form.Input>
 
                                 <Form.Input
@@ -79,18 +96,15 @@ export default function FormEntregador () {
                                     label='Fone Fixo '
                                     width={4}>
                                    </Form.Input> 
-
-
-                                   
+ 
                                 <Form.Input
                                     fluid
-                                     label='QTD EtregasRealizadas'
+                                     label='qtd EtregasRealizadas'
                                     width={3}
                                 >
-                            
-                                    </Form.Input>
+                                </Form.Input>
 
-                                    <Form.Input
+                                <Form.Input
                                         fluid
                                         label='Valor Por Frete'
                                         width={3}
@@ -105,7 +119,7 @@ export default function FormEntregador () {
 
                             <Form.Input
                                         fluid
-                                        label='Rua'
+                                        label='enderecoRua'
                                         width={16}
                                     >
 
