@@ -19,7 +19,6 @@ function Rotas() {
                <Route pasth="form-List-produto" element={ <FormProduto/>} />
               <Route pasth="form-List-entregador" element={ <FormEntregador/>} />
                 
-                   </Route>
                 
                 
             </Routes>
