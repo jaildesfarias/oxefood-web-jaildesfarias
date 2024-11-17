@@ -14,6 +14,14 @@ function Rotas() {
                 <Route path="form-cliente" element={ <FormCliente/> } />
                 <Route path="form-produto" element={ <FormProduto/> } />
                 <Route path="form-entregador" element={ <FormEntregador/> } />
+
+               <Route path="form-List-cliente" element={ <FormCliente/>} />
+               <Route pasth="form-List-produto" element={ <FormProduto/>} />
+              <Route pasth="form-List-entregador" element={ <FormEntregador/>} />
+                
+                   </Route>
+                
+                
             </Routes>
         </>
     )
