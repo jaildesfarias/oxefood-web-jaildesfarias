@@ -8,8 +8,7 @@ export default function FormEntregador () {
     return (
 
         <div>
-               <MenuSistema tela={'cliente'} />
-
+            <MenuSistema tela={'cliente'} />
             <div style={{marginTop: '3%'}}>
 
                 <Container textAlign='justified' >
