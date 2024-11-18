@@ -14,13 +14,15 @@ export default function FormEntregador () {
         const [valorFrete, setValorFrete] = useState();
         const [enderecoRua, setEnderecoRua] = useState();
         const [enderecoCompleto, setEnderecooCompleto] = useState();
-        const [enderecoNumero, set[EnderecoNumero] = useState();
-        const [enderecoBairro, set[EnderecoBairro] = useState();
-        const [enderecoCidade, set[enderecoCidade] = useState();  
-        const [enderecoCep, set[enderecoCep] = useState();  
-        const [enderecoUf, set[EnderecoUf] = useState(); 
-        const [ativo, set[Ativo] = useState(); 
-    
+        const [enderecoNumero, setEnderecoNumero] = useState();
+
+        const [enderecoBairro, setEnderecoBairro] = useState();
+        const [enderecoCidade, setenderecoCidade] = useState();  
+        const [enderecoCep, setenderecoCep] = useState();  
+        const [enderecoUf, setEnderecoUf] = useState(); 
+        const [ativo, setAtivo] = useState(); 
+       
+
         return (
 
         <div>
