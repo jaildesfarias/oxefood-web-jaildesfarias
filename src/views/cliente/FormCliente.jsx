@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import InputMask from 'react-input-mask';
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
+import { Link } from "react-router-dom";
 
 
 export default function FormCliente () {
@@ -69,11 +70,9 @@ export default function FormCliente () {
 			                         	onChange={e => setCpf(e.target.value)} 
                                     /> 
                                 </Form.Input>
-
                             </Form.Group>
-                            
-                            <Form.Group>
-
+				
+                            <Form.Group>    
                                 <Form.Input
                                     fluid
                                     label='Fone Celular'
@@ -89,7 +88,8 @@ export default function FormCliente () {
                                     width={6}>
                                     <InputMask 
                                         mask="(99) 9999.9999"
-                                        value={nome}
+                                        value={Fone Fixo }
+				        onChange={e => setFoneFixo(e.target.value)}
                                     /> 
                                 </Form.Input>
 
@@ -116,16 +116,17 @@ export default function FormCliente () {
                                 circular
                                 icon
                                 labelPosition='left'
-                                color='blue'
-				                floated='right'
-                                onClick={() => salvar()}
-
+                                color='orange'
+				floated='right'
+				onClick={() => salvar()}
+				    >
+				<Icon name='reply' />
+				<Link to={'/list-cliente'}>Voltar</Link>
+				</Button>
                             >
-                                <Icon name='reply' />
-                                Voltar
                             </Button>
                                 
-                            <Button
+                            <Button>
                                 inverted
                                 circular
                                 icon

@@ -24,19 +24,36 @@ export default function MenuSistema (props) {
                    as={Link}
                    to='/form-cliente'
                />
-       <Menu.Item
+              <Menu.Item
+                  content="Lista Cliente"
+                  active={props.tela === 'list-cliente'}
+                  as={Link}
+                  to="/list-cliente"
+               />
+              <Menu.Item
                    content='Produto'
                    active={props.tela === 'produto'}
                    as={Link}
                    to='/form-produto'
                />
-
+               <Menu.Item
+                  content="Lista Produto"
+                  active={props.tela === 'list-produto'}
+                  as={Link}
+                  to="/list-produto"
+                  />
                <Menu.Item
                    content='Entregador'
                    active={props.tela === 'entregador'}
                    as={Link}
                    to='/form-entregador'
                />
+              <Menu.Item
+                 content='Entregador'
+                 active={props.tela ==='List entregador'}
+                 as={Link}
+                 to='/List-entregador'
+                 />
 
            </Menu>
        </div>

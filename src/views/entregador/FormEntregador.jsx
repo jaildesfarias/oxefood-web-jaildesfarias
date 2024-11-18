@@ -2,6 +2,7 @@
 import React from "react";
 import InputMask from 'react-input-mask';
 import { Button, Container, Divider, Form, FormGroup, Icon,Select,TextArea } from 'semantic-ui-react';
+import MenuSistema from '../../MenuSistema';
 
 export default function FormEntregador () {
    

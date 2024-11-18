@@ -6,7 +6,6 @@ import FormEntregador from './views/entregador/FormEntregador';
 import FormCliente from './views/cliente/FormCliente';
 import Rotas from './Rotas';
 
-
 function App() {
 
   return (

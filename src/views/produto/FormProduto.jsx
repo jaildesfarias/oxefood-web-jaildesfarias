@@ -1,14 +1,14 @@
 import React from "react";
 import InputMask from 'react-input-mask';
 import { Button, Container, Divider, Form, Icon, TextArea } from 'semantic-ui-react';
+import MenuSistema form '../../MenuSistema';
 
 export default function FormEntregador () {
 
     return (
 
         <div>
-               <MenuSistema tela={'cliente'} />
-
+            <MenuSistema tela={'cliente'} />
             <div style={{marginTop: '3%'}}>
 
                 <Container textAlign='justified' >
