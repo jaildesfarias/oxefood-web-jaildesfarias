@@ -1,55 +1,31 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button, Container, Divider, Form, Icon, Select } from "semantic-ui-react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Button, Container, Divider, Icon, Table } from "semantic-ui-react";
 import MenuSistema from "../../MenuSistema";
 import axios from "axios";
 
-export default function FormEntregador() {
-    const navigate = useNavigate();
+export default function ListEntregador() {
+    const [lista, setLista] = useState([]);
 
-    const [nome, setNome] = useState("");
-    const [cpf, setCpf] = useState("");
-    const [dataNascimento, setDataNascimento] = useState("");
-    const [foneCelular, setFoneCelular] = useState("");
-    const [foneFixo, setFoneFixo] = useState("");
-    const [qtdEntregas, setQtdEntregas] = useState("");
-    const [valorFrete, setValorFrete] = useState("");
-    const [enderecoRua, setEnderecoRua] = useState("");
-    const [enderecoNumero, setEnderecoNumero] = useState("");
-    const [enderecoBairro, setEnderecoBairro] = useState("");
-    const [enderecoCidade, setEnderecoCidade] = useState("");
-    const [enderecoCep, setEnderecoCep] = useState("");
-    const [enderecoUf, setEnderecoUf] = useState("");
-    const [complemento, setComplemento] = useState("");
-    const [ativo, setAtivo] = useState("");
+    useEffect(() => {
+        carregarLista();
+    }, []);
 
-    const salvarEntregador = () => {
-        const novoEntregador = {
-            nome,
-            cpf,
-            dataNascimento,
-            foneCelular,
-            foneFixo,
-            qtdEntregas,
-            valorFrete,
-            enderecoRua,
-            enderecoNumero,
-            enderecoBairro,
-            enderecoCidade,
-            enderecoCep,
-            enderecoUf,
-            complemento,
-            ativo,
-        };
+    const carregarLista = () => {
+        axios.get("http://localhost:8080/api/entregadores").then((response) => {
+            setLista(response.data);
+        });
+    };
 
+    const excluirEntregador = (id) => {
         axios
-            .post("http://localhost:8080/api/entregadores", novoEntregador)
+            .delete(`http://localhost:8080/api/entregadores/${id}`)
             .then(() => {
-                alert("Entregador cadastrado com sucesso!");
-                navigate("/list-entregadores");
+                alert("Entregador excluído com sucesso!");
+                carregarLista();
             })
             .catch((error) => {
-                alert("Erro ao cadastrar o entregador. Tente novamente.");
+                alert("Erro ao excluir entregador. Tente novamente.");
                 console.error(error);
             });
     };
@@ -57,56 +33,53 @@ export default function FormEntregador() {
     return (
         <div>
             <MenuSistema tela={"entregador"} />
-
             <div style={{ marginTop: "3%" }}>
                 <Container textAlign="justified">
-                    <h2>
-                        <span style={{ color: "darkgray" }}>
-                            Entregador &nbsp;
-                            <Icon name="angle double right" size="small" />
-                        </span>
-                        Cadastro
-                    </h2>
-
+                    <h2>Entregadores</h2>
                     <Divider />
-
-                    <div style={{ marginTop: "4%" }}>
-                        <Form>
-                            <Form.Group>
-                                <Form.Input
-                                    required
-                                    fluid
-                                    label="Nome"
-                                    maxLength="100"
-                                    width={9}
-                                    value={nome}
-                                    onChange={(e) => setNome(e.target.value)}
-                                />
-                                <Form.Input required fluid label="CPF" width={5}>
-                                    <input
-                                        type="text"
-                                        value={cpf}
-                                        onChange={(e) => setCpf(e.target.value)}
-                                        maxLength={14}
-                                    />
-                                </Form.Input>
-                            </Form.Group>
-               
-                        </Form>
-
-                        <div style={{ marginTop: "4%" }}>
-                            <Button
-                                inverted
-                                circular
-                                color="blue"
-                                floated="right"
-                                onClick={salvarEntregador}
-                            >
-                                <Icon name="save" />
-                                Salvar
-                            </Button>
-                        </div>
-                    </div>
+                    <Button
+                        label="Novo"
+                        circular
+                        color="blue"
+                        icon="clipboard outline"
+                        floated="right"
+                        as={Link}
+                        to="/form-entregador"
+                    />
+                    <Table celled striped>
+                        <Table.Header>
+                            <Table.Row>
+                                <Table.HeaderCell>Nome</Table.HeaderCell>
+                                <Table.HeaderCell>CPF</Table.HeaderCell>
+                                <Table.HeaderCell>Fone Celular</Table.HeaderCell>
+                                <Table.HeaderCell>Ações</Table.HeaderCell>
+                            </Table.Row>
+                        </Table.Header>
+                        <Table.Body>
+                            {lista.map((entregador) => (
+                                <Table.Row key={entregador.id}>
+                                    <Table.Cell>{entregador.nome}</Table.Cell>
+                                    <Table.Cell>{entregador.cpf}</Table.Cell>
+                                    <Table.Cell>{entregador.foneCelular}</Table.Cell>
+                                    <Table.Cell textAlign="center">
+                                        <Button
+                                            circular
+                                            color="green"
+                                            icon="edit"
+                                            as={Link}
+                                            to={`/form-entregador/${entregador.id}`}
+                                        />
+                                        <Button
+                                            circular
+                                            color="red"
+                                            icon="trash"
+                                            onClick={() => excluirEntregador(entregador.id)}
+                                        />
+                                    </Table.Cell>
+                                </Table.Row>
+                            ))}
+                        </Table.Body>
+                    </Table>
                 </Container>
             </div>
         </div>
