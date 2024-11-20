@@ -13,12 +13,13 @@ export default function FormCliente() {
     const [foneFixo, setFoneFixo] = useState("");
 
     function salvar() {
-        const clienteRequest = {
-            nome,
-            cpf,
-            dataNascimento,
-            foneCelular,
-            foneFixo,
+        lest clienteRequest = {
+           nome:  nome,
+           dataNascimento: dataNascimento,
+           cpf:  cpf,
+           foneCelular: foneCelular,
+           foneFixo: foneFixor,
+               
         };
 
         axios
