@@ -1,114 +1,174 @@
 import axios from 'axios';
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Button, Container, Divider, Icon, Table } from 'semantic-ui-react';
+import { useParams, useHistory } from "react-router-dom";
+import { Button, Container, Divider, Form, Input, Message } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
 
-export default function ListCliente() {
+export default function FormProduto() {
+   const [produto, setProduto] = useState({
+       codigo: '',
+       titulo: '',
+       descricao: '',
+       valorUnitario: '',
+       tempoEntregaMinimo: '',
+       tempoEntregaMaximo: ''
+   });
 
-   const [lista, setLista] = useState([]);
-
+   const [erro, setErro] = useState('');
+   const { id } = useParams();
+   const history = useHistory();
+   
    useEffect(() => {
-       carregarLista();
-   }, []);
-
-   function carregarLista() {
-       axios.get("http://localhost:8080/api/cliente")
-       .then((response) => {
-           setLista(response.data)
-       });
-   }
-
-   function formatarData(dataParam) {
-       if (dataParam === null || dataParam === '' || dataParam === undefined) {
-           return '';
+       if (id) {
+           axios.get(`http://localhost:8080/api/produtos/${id}`)
+               .then((response) => {
+                   setProduto(response.data);
+               })
+               .catch((error) => {
+                   console.error("Erro ao carregar produto: ", error);
+                   setErro("Erro ao carregar produto.");
+               });
        }
-       let arrayData = dataParam.split('-');
-       return arrayData[2] + '/' + arrayData[1] + '/' + arrayData[0];
-   }
+   }, [id]);
 
-   const excluirCliente = (id) => {
-       axios
-           .delete(`http://localhost:8080/api/cliente/${id}`)
-           .then(() => {
-               alert("Cliente excluído com sucesso!");
-               carregarLista(); // Atualiza a lista após exclusão
-           })
-           .catch((error) => {
-               alert("Erro ao excluir cliente. Tente novamente.");
-               console.error(error);
-           });
+   const handleChange = (e) => {
+       setProduto({
+           ...produto,
+           [e.target.name]: e.target.value
+       });
+   };
+
+   const handleSubmit = (e) => {
+       e.preventDefault();
+
+       if (!produto.codigo || !produto.titulo || !produto.valorUnitario || !produto.tempoEntregaMinimo || !produto.tempoEntregaMaximo) {
+           setErro("Todos os campos devem ser preenchidos.");
+           return;
+       }
+
+       const produtoData = { ...produto };
+
+       if (id) {
+           // Atualizar produto existente
+           axios.put(`http://localhost:8080/api/produtos/${id}`, produtoData)
+               .then(() => {
+                   alert("Produto atualizado com sucesso!");
+                   history.push('/list-produto');
+               })
+               .catch((error) => {
+                   console.error("Erro ao atualizar produto: ", error);
+                   setErro("Erro ao atualizar produto. Tente novamente.");
+               });
+       } else {
+           // Criar novo produto
+           axios.post('http://localhost:8080/api/produtos', produtoData)
+               .then(() => {
+                   alert("Produto cadastrado com sucesso!");
+                   history.push('/list-produto');
+               })
+               .catch((error) => {
+                   console.error("Erro ao cadastrar produto: ", error);
+                   setErro("Erro ao cadastrar produto. Tente novamente.");
+               });
+       }
    };
 
    return (
        <div>
-           <MenuSistema tela={'cliente'} />
+           <MenuSistema tela={'produto'} />
            <div style={{ marginTop: '3%' }}>
-               <Container textAlign='justified' >
-                   <h2>Cliente</h2>
+               <Container textAlign='justified'>
+                   <h2>{id ? 'Editar Produto' : 'Novo Produto'}</h2>
                    <Divider />
 
-                   <div style={{ marginTop: '4%' }}>
+                   {erro && <Message negative>{erro}</Message>}
+
+                   <Form onSubmit={handleSubmit}>
+                       <Form.Field>
+                           <label>Código</label>
+                           <Input
+                               type="text"
+                               name="codigo"
+                               value={produto.codigo}
+                               onChange={handleChange}
+                               placeholder="Código do produto"
+                               required
+                           />
+                       </Form.Field>
+
+                       <Form.Field>
+                           <label>Título</label>
+                           <Input
+                               type="text"
+                               name="titulo"
+                               value={produto.titulo}
+                               onChange={handleChange}
+                               placeholder="Título do produto"
+                               required
+                           />
+                       </Form.Field>
+
+                       <Form.Field>
+                           <label>Descrição</label>
+                           <Input
+                               type="text"
+                               name="descricao"
+                               value={produto.descricao}
+                               onChange={handleChange}
+                               placeholder="Descrição do produto"
+                           />
+                       </Form.Field>
+
+                       <Form.Field>
+                           <label>Valor Unitário</label>
+                           <Input
+                               type="number"
+                               name="valorUnitario"
+                               value={produto.valorUnitario}
+                               onChange={handleChange}
+                               placeholder="Valor unitário"
+                               required
+                           />
+                       </Form.Field>
+
+                       <Form.Field>
+                           <label>Tempo de Entrega Mínimo (dias)</label>
+                           <Input
+                               type="number"
+                               name="tempoEntregaMinimo"
+                               value={produto.tempoEntregaMinimo}
+                               onChange={handleChange}
+                               placeholder="Tempo de entrega mínimo"
+                               required
+                           />
+                       </Form.Field>
+
+                       <Form.Field>
+                           <label>Tempo de Entrega Máximo (dias)</label>
+                           <Input
+                               type="number"
+                               name="tempoEntregaMaximo"
+                               value={produto.tempoEntregaMaximo}
+                               onChange={handleChange}
+                               placeholder="Tempo de entrega máximo"
+                               required
+                           />
+                       </Form.Field>
+
                        <Button
-                           label='Novo'
-                           circular
-                           color='orange'
-                           icon='clipboard outline'
-                           floated='right'
-                           as={Link}
-                           to='/form-cliente'
+                           type="submit"
+                           color="orange"
+                           icon="save"
+                           content="Salvar"
                        />
-
-                       <br/><br/><br/>
-
-                       <Table color='orange' sortable celled>
-                           <Table.Header>
-                               <Table.Row>
-                                   <Table.HeaderCell>Nome</Table.HeaderCell>
-                                   <Table.HeaderCell>CPF</Table.HeaderCell>
-                                   <Table.HeaderCell>Data de Nascimento</Table.HeaderCell>
-                                   <Table.HeaderCell>Fone Celular</Table.HeaderCell>
-                                   <Table.HeaderCell>Fone Fixo</Table.HeaderCell>
-                                   <Table.HeaderCell textAlign='center'>Ações</Table.HeaderCell>
-                               </Table.Row>
-                           </Table.Header>
-
-                           <Table.Body>
-                               {lista.map(cliente => (
-                                   <Table.Row key={cliente.id}>
-                                       <Table.Cell>{cliente.nome}</Table.Cell>
-                                       <Table.Cell>{cliente.cpf}</Table.Cell>
-                                       <Table.Cell>{formatarData(cliente.dataNascimento)}</Table.Cell>
-                                       <Table.Cell>{cliente.foneCelular}</Table.Cell>
-                                       <Table.Cell>{cliente.foneFixo}</Table.Cell>
-                                       <Table.Cell textAlign='center'>
-                                           <Button
-                                               inverted
-                                               circular
-                                               color='green'
-                                               title='Clique aqui para editar os dados deste cliente'
-                                               icon
-                                               as={Link}
-                                               to={`/form-cliente/${cliente.id}`}
-                                           >
-                                               <Icon name='edit' />
-                                           </Button> &nbsp;
-                                           <Button
-                                               inverted
-                                               circular
-                                               color='red'
-                                               title='Clique aqui para remover este cliente'
-                                               icon
-                                               onClick={() => excluirCliente(cliente.id)}
-                                           >
-                                               <Icon name='trash' />
-                                           </Button>
-                                       </Table.Cell>
-                                   </Table.Row>
-                               ))}
-                           </Table.Body>
-                       </Table>
-                   </div>
+                       <Button
+                           as={Link}
+                           to="/list-produto"
+                           color="red"
+                           icon="arrow left"
+                           content="Voltar"
+                       />
+                   </Form>
                </Container>
            </div>
        </div>
