@@ -50,8 +50,18 @@ export default function ListEntregador() {
                         <Table.Header>
                             <Table.Row>
                                 <Table.HeaderCell>Nome</Table.HeaderCell>
-                                <Table.HeaderCell>CPF</Table.HeaderCell>
+                                <Table.HeaderCell>cpf</Table.HeaderCell>
                                 <Table.HeaderCell>Fone Celular</Table.HeaderCell>
+                                <Table.HeaderCell>Fone Fixo</Table.HeaderCell>
+                                <Table.HeaderCell>Qtd. Entregas</Table.HeaderCell>
+                                <Table.HeaderCell>Endereço Rua</Table.HeaderCell>
+                                <Table.HeaderCell>Endereço Número</Table.HeaderCell>
+                                <Table.HeaderCell>Endereço Bairro</Table.HeaderCell>
+                                <Table.HeaderCell>Endereço Cidade</Table.HeaderCell>
+                                <Table.HeaderCell>Endereço Cep</Table.HeaderCell>
+                                <Table.HeaderCell>Endereço UF</Table.HeaderCell>
+                                <Table.HeaderCell>Complemento</Table.HeaderCell>
+                                <Table.HeaderCell>Ativo</Table.HeaderCell>
                                 <Table.HeaderCell>Ações</Table.HeaderCell>
                             </Table.Row>
                         </Table.Header>
@@ -61,6 +71,16 @@ export default function ListEntregador() {
                                     <Table.Cell>{entregador.nome}</Table.Cell>
                                     <Table.Cell>{entregador.cpf}</Table.Cell>
                                     <Table.Cell>{entregador.foneCelular}</Table.Cell>
+                                    <Table.Cell>{entregador.foneFixo}</Table.Cell>
+                                    <Table.Cell>{entregador.qtdEntregas}</Table.Cell>
+                                    <Table.Cell>{entregador.enderecoRua}</Table.Cell>
+                                    <Table.Cell>{entregador.enderecoNumero}</Table.Cell>
+                                    <Table.Cell>{entregador.enderecoBairro}</Table.Cell>
+                                    <Table.Cell>{entregador.enderecoCidade}</Table.Cell>
+                                    <Table.Cell>{entregador.enderecoCep}</Table.Cell>
+                                    <Table.Cell>{entregador.enderecoUf}</Table.Cell>
+                                    <Table.Cell>{entregador.complemento}</Table.Cell>
+                                    <Table.Cell>{entregador.ativo ? 'Sim' : 'Não'}</Table.Cell>
                                     <Table.Cell textAlign="center">
                                         <Button
                                             circular
