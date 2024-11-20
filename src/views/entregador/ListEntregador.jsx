@@ -1,136 +1,114 @@
-import axios from 'axios';
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Button, Container, Divider, Icon, Table } from 'semantic-ui-react';
-import MenuSistema from '../../MenuSistema';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button, Container, Divider, Form, Icon, Select } from "semantic-ui-react";
+import MenuSistema from "../../MenuSistema";
+import axios from "axios";
 
-export default function ListEntregador () {
+export default function FormEntregador() {
+    const navigate = useNavigate();
 
-   const [lista, setLista] = useState([]);
+    const [nome, setNome] = useState("");
+    const [cpf, setCpf] = useState("");
+    const [dataNascimento, setDataNascimento] = useState("");
+    const [foneCelular, setFoneCelular] = useState("");
+    const [foneFixo, setFoneFixo] = useState("");
+    const [qtdEntregas, setQtdEntregas] = useState("");
+    const [valorFrete, setValorFrete] = useState("");
+    const [enderecoRua, setEnderecoRua] = useState("");
+    const [enderecoNumero, setEnderecoNumero] = useState("");
+    const [enderecoBairro, setEnderecoBairro] = useState("");
+    const [enderecoCidade, setEnderecoCidade] = useState("");
+    const [enderecoCep, setEnderecoCep] = useState("");
+    const [enderecoUf, setEnderecoUf] = useState("");
+    const [complemento, setComplemento] = useState("");
+    const [ativo, setAtivo] = useState("");
 
-   useEffect(() => {
-       carregarLista();
-   }, [])
+    const salvarEntregador = () => {
+        const novoEntregador = {
+            nome,
+            cpf,
+            dataNascimento,
+            foneCelular,
+            foneFixo,
+            qtdEntregas,
+            valorFrete,
+            enderecoRua,
+            enderecoNumero,
+            enderecoBairro,
+            enderecoCidade,
+            enderecoCep,
+            enderecoUf,
+            complemento,
+            ativo,
+        };
 
-   function carregarLista() {
+        axios
+            .post("http://localhost:8080/api/entregadores", novoEntregador)
+            .then(() => {
+                alert("Entregador cadastrado com sucesso!");
+                navigate("/list-entregadores");
+            })
+            .catch((error) => {
+                alert("Erro ao cadastrar o entregador. Tente novamente.");
+                console.error(error);
+            });
+    };
 
-       axios.get("http://localhost:8080/api/cliente")
-       .then((response) => {
-           setLista(response.data)
-       })
-   }
-   function formatarData(dataParam) {
+    return (
+        <div>
+            <MenuSistema tela={"entregador"} />
 
-    if (dataParam === null || dataParam === '' || dataParam === undefined) {
-        return ''
-    }
+            <div style={{ marginTop: "3%" }}>
+                <Container textAlign="justified">
+                    <h2>
+                        <span style={{ color: "darkgray" }}>
+                            Entregador &nbsp;
+                            <Icon name="angle double right" size="small" />
+                        </span>
+                        Cadastro
+                    </h2>
 
-    let arrayData = dataParam.split('-');
-    return arrayData[2] + '/' + arrayData[1] + '/' + arrayData[0];
-}
-return(
-    <div>
-        <MenuSistema tela={'entregador'} />
-        <div style={{marginTop: '3%'}}>
+                    <Divider />
 
-            <Container textAlign='justified' >
+                    <div style={{ marginTop: "4%" }}>
+                        <Form>
+                            <Form.Group>
+                                <Form.Input
+                                    required
+                                    fluid
+                                    label="Nome"
+                                    maxLength="100"
+                                    width={9}
+                                    value={nome}
+                                    onChange={(e) => setNome(e.target.value)}
+                                />
+                                <Form.Input required fluid label="CPF" width={5}>
+                                    <input
+                                        type="text"
+                                        value={cpf}
+                                        onChange={(e) => setCpf(e.target.value)}
+                                        maxLength={14}
+                                    />
+                                </Form.Input>
+                            </Form.Group>
+               
+                        </Form>
 
-                <h2> Entregador </h2>
-                <Divider />
-
-                <div style={{marginTop: '4%'}}>
-                    <Button
-                        label='Novo'
-                        circular
-                        color='blue'
-                        icon='clipboard outline'
-                        floated='right'
-                        as={Link}
-                        to='/form-cliente'
-                    />
-
-<br/><br/><br/>
-                  
-                  <Table color='orange' sortable celled>
-
-                      <Table.Header>
-                          <Table.Row>
-                              <Table.HeaderCell>Nome</Table.HeaderCell>
-                              <Table.HeaderCell>CPF</Table.HeaderCell>
-                              <Table.HeaderCell>Data de Nascimento</Table.HeaderCell>
-                              <Table.HeaderCell>Fone Celular</Table.HeaderCell>
-                              <Table.HeaderCell>Fone Fixo</Table.HeaderCell>
-
-                              <Table.HeaderCell>qtdEntregado</Table.HeaderCell>
-                              <Table.HeaderCell>valorFrete</Table.HeaderCell>
-                              <Table.HeaderCell>enderecoRua</Table.HeaderCell>
-                              <Table.HeaderCell>enderecoCompleto</Table.HeaderCell>
-                              <Table.HeaderCell>enderecoNumero</Table.HeaderCell>
-                              <Table.HeaderCell>enderecoCidade</Table.HeaderCell>
-                             < Table.HeaderCell>enderecoCompleto</Table.HeaderCell>
-                              <Table.HeaderCell>enderecoNumero</Table.HeaderCell>
-
-                              <Table.HeaderCell>enderecoCep</Table.HeaderCell>
-                              <Table.HeaderCell>enderecoUf</Table.HeaderCell>
-                              <Table.HeaderCell>ativo</Table.HeaderCell>
-
-
-                              <Table.HeaderCell textAlign='center'>Ações</Table.HeaderCell>
-                          </Table.Row>
-                      </Table.Header>
-                 
-                      <Table.Body>
-
-                          { lista.map(entregador => (
-
-                              <Table.Row key={entregador.id}>
-                                  <Table.Cell>{entregador.nome}</Table.Cell>
-                                  <Table.Cell>{entregador.cpf}</Table.Cell>
-                                  <Table.Cell>{formatarData(entregador.dataNascimento)}</Table.Cell>
-                                  <Table.Cell>{entregador.foneCelular}</Table.Cell>
-                                  
-                                  <Table.Cell>{entregador. enderecoNumero}</Table.Cell>
-                                  <Table.Cell>{entregador.enderecoCidade}</Table.Cell>
-                                  <Table.Cell>{entregador. enderecoNumero}</Table.Cell>
-                                  <Table.Cell>{entregador.enderecoCidade}</Table.Cell>
-                                  <Table.Cell>{entregador.enderecoCompleto}</Table.Cell>
-                                  <Table.Cell>{entregador.enderecoNumero}</Table.Cell>
-                                  <Table.Cell>{entregador.enderecoCep}</Table.Cell>
-                                  <Table.Cell>{entregador.enderecoUfr}</Table.Cell>
-                                  <Table.Cell>{entregador.ativo}</Table.Cell>
-
-
-
-
-                                  <Table.Cell textAlign='center'>
-
-                                      <Button
-                                          inverted
-                                          circular
-                                          color='green'
-                                          title='Clique aqui para editar os dados deste cliente'
-                                          icon>
-                                               <Icon name='edit' />
-                                      </Button> &nbsp;
-                                      <Button
-                                               inverted
-                                               circular
-                                               color='red'
-                                               title='Clique aqui para remover este cliente'
-                                               icon>
-                                                   <Icon name='trash' />
-                                           </Button>
-
-                                       </Table.Cell>
-                                   </Table.Row>
-                               ))}
-
-                           </Table.Body>
-                       </Table>
-                   </div>
-               </Container>
-           </div>
-
-       </div>
-   )
+                        <div style={{ marginTop: "4%" }}>
+                            <Button
+                                inverted
+                                circular
+                                color="blue"
+                                floated="right"
+                                onClick={salvarEntregador}
+                            >
+                                <Icon name="save" />
+                                Salvar
+                            </Button>
+                        </div>
+                    </div>
+                </Container>
+            </div>
+        </div>
+    );
 }
