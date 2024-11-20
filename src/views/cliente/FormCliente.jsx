@@ -3,7 +3,7 @@ import axios from "axios";
 import InputMask from "react-input-mask";
 import { Button, Container, Divider, Form, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import MenuSistema from "./MenuSistema"; // Certifique-se de que o caminho está correto.
+import MenuSistema from "./MenuSistema"; 
 
 export default function FormCliente() {
     const [nome, setNome] = useState("");
