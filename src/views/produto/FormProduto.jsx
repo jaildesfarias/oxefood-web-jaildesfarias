@@ -1,139 +1,116 @@
-import React from "react";
-import InputMask from 'react-input-mask';
-import { Button, Container, Divider, Form, Icon, TextArea } from 'semantic-ui-react';
-import MenuSistema form '../../MenuSistema';
+import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Button, Container, Divider, Icon, Table } from 'semantic-ui-react';
+import MenuSistema from '../../MenuSistema';
 
-export default function FormEntregador () {
+export default function ListCliente() {
 
-    return (
+   const [lista, setLista] = useState([]);
 
-        <div>
-            <MenuSistema tela={'cliente'} />
-            <div style={{marginTop: '3%'}}>
+   useEffect(() => {
+       carregarLista();
+   }, []);
 
-                <Container textAlign='justified' >
+   function carregarLista() {
+       axios.get("http://localhost:8080/api/cliente")
+       .then((response) => {
+           setLista(response.data)
+       });
+   }
 
-                    <h2> <span style={{color: 'darkgray'}}> Entregador &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro </h2>
+   function formatarData(dataParam) {
+       if (dataParam === null || dataParam === '' || dataParam === undefined) {
+           return '';
+       }
+       let arrayData = dataParam.split('-');
+       return arrayData[2] + '/' + arrayData[1] + '/' + arrayData[0];
+   }
 
-                    <Divider />
+   const excluirCliente = (id) => {
+       axios
+           .delete(`http://localhost:8080/api/cliente/${id}`)
+           .then(() => {
+               alert("Cliente excluído com sucesso!");
+               carregarLista(); // Atualiza a lista após exclusão
+           })
+           .catch((error) => {
+               alert("Erro ao excluir cliente. Tente novamente.");
+               console.error(error);
+           });
+   };
 
-                    <div style={{marginTop: '4%'}}>
+   return (
+       <div>
+           <MenuSistema tela={'cliente'} />
+           <div style={{ marginTop: '3%' }}>
+               <Container textAlign='justified' >
+                   <h2>Cliente</h2>
+                   <Divider />
 
-                        <Form>
+                   <div style={{ marginTop: '4%' }}>
+                       <Button
+                           label='Novo'
+                           circular
+                           color='orange'
+                           icon='clipboard outline'
+                           floated='right'
+                           as={Link}
+                           to='/form-cliente'
+                       />
 
-                            <Form.Group widths='equal'>
+                       <br/><br/><br/>
 
-                                <Form.Input
-                                    required
-                                    fluid
-                                    label='Nome'
-                                    maxLength="100"
-                                    placeholder="Informe o nome do entregador"
-                                />
+                       <Table color='orange' sortable celled>
+                           <Table.Header>
+                               <Table.Row>
+                                   <Table.HeaderCell>Nome</Table.HeaderCell>
+                                   <Table.HeaderCell>CPF</Table.HeaderCell>
+                                   <Table.HeaderCell>Data de Nascimento</Table.HeaderCell>
+                                   <Table.HeaderCell>Fone Celular</Table.HeaderCell>
+                                   <Table.HeaderCell>Fone Fixo</Table.HeaderCell>
+                                   <Table.HeaderCell textAlign='center'>Ações</Table.HeaderCell>
+                               </Table.Row>
+                           </Table.Header>
 
-                                <Form.Input
-                                    required
-                                    fluid
-                                    label='CPF'
-                                >
-                                    <InputMask 
-                                        mask="999.999.999-99"
-                                        placeholder="000.000.000-00"
-                                    />
-                                </Form.Input>
-
-                                <Form.Input
-                                    required
-                                    fluid
-                                    label='RG'
-                                >
-                                    <InputMask 
-                                        mask="99.999.999-9"
-                                        placeholder="00.000.000-0"
-                                    />
-                                </Form.Input>
-
-                            </Form.Group>
-                            
-                            <Form.Group widths='equal'>
-
-                                <Form.Input fluid width={13} label='Descrição'>
-                                    <TextArea placeholder='Informe a descrição do entregador' />
-                                </Form.Input>
-
-                            </Form.Group>
-                               
-                            <Form.Group>
-                                <Form.Input
-                                    required
-                                    fluid
-                                    label='Valor Unitário'
-                                    width={6}
-                                />
-
-                                <Form.Input
-                                    fluid
-                                    label='Tempo de Entrega Mínimo em Minutos'
-                                    width={6}
-                                >
-                                    <InputMask 
-                                        mask="99"
-                                        maskChar={null}
-                                        placeholder="30"
-                                    /> 
-                                </Form.Input>
-
-                                <Form.Input
-                                    fluid
-                                    label='Tempo de Entrega Máximo em Minutos'
-                                    width={6}
-                                >
-                                    <InputMask 
-                                        mask="99"
-                                        maskChar={null}
-                                        placeholder="40"
-                                    /> 
-                                </Form.Input>
-
-                            </Form.Group>
-                        
-                        </Form>
-                        
-                        <div style={{marginTop: '4%'}}>
-
-                            <Button
-                                type="button"
-                                inverted
-                                circular
-                                icon
-                                labelPosition='left'
-                                color='orange'
-                            >
-                                <Icon name='reply' />
-                                Voltar
-                            </Button>
-                                
-                            <Button
-                                inverted
-                                circular
-                                icon
-                                labelPosition='left'
-                                color='blue'
-                                floated='right'
-                                
-                            >
-                                <Icon name='save' />
-                                Salvar
-                            </Button>
-
-                        </div>
-
-                    </div>
-                    
-                </Container>
-            </div>
-        </div>
-
-    );
-
+                           <Table.Body>
+                               {lista.map(cliente => (
+                                   <Table.Row key={cliente.id}>
+                                       <Table.Cell>{cliente.nome}</Table.Cell>
+                                       <Table.Cell>{cliente.cpf}</Table.Cell>
+                                       <Table.Cell>{formatarData(cliente.dataNascimento)}</Table.Cell>
+                                       <Table.Cell>{cliente.foneCelular}</Table.Cell>
+                                       <Table.Cell>{cliente.foneFixo}</Table.Cell>
+                                       <Table.Cell textAlign='center'>
+                                           <Button
+                                               inverted
+                                               circular
+                                               color='green'
+                                               title='Clique aqui para editar os dados deste cliente'
+                                               icon
+                                               as={Link}
+                                               to={`/form-cliente/${cliente.id}`}
+                                           >
+                                               <Icon name='edit' />
+                                           </Button> &nbsp;
+                                           <Button
+                                               inverted
+                                               circular
+                                               color='red'
+                                               title='Clique aqui para remover este cliente'
+                                               icon
+                                               onClick={() => excluirCliente(cliente.id)}
+                                           >
+                                               <Icon name='trash' />
+                                           </Button>
+                                       </Table.Cell>
+                                   </Table.Row>
+                               ))}
+                           </Table.Body>
+                       </Table>
+                   </div>
+               </Container>
+           </div>
+       </div>
+   );
 }
