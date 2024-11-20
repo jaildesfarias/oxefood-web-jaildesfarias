@@ -42,7 +42,7 @@ return(
                     <Button
                         label='Novo'
                         circular
-                        color='orange'
+                        color='blue'
                         icon='clipboard outline'
                         floated='right'
                         as={Link}
