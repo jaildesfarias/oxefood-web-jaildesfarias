@@ -94,13 +94,15 @@ export default function ListProduto() {
                                            <Button
                                                inverted
                                                circular
-                                               color='red'
+                                               color='rgreen'
                                                title='Clique aqui para remover este produto'
                                                icon
                                                onClick={() => excluirProduto(produto.id)}
                                            >
                                                <Icon name='trash' />
-                                           </Button>
+                                               <Link to="/form-cliente" state={{id: cliente.id}} style={{color: 'green'}}> <Icon name='edit' /> </Link>
+                                           </Button> &nbsp;
+
                                        </Table.Cell>
                                    </Table.Row>
                                ))}

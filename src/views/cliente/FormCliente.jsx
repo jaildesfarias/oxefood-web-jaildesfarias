@@ -13,13 +13,13 @@ export default function FormCliente() {
     const [foneFixo, setFoneFixo] = useState("");
 
     function salvar() {
-        lest clienteRequest = {
+        let clienteRequest = {
            nome:  nome,
            dataNascimento: dataNascimento,
            cpf:  cpf,
            foneCelular: foneCelular,
            foneFixo: foneFixor,
-               
+        
         };
 
         axios
@@ -122,9 +122,10 @@ export default function FormCliente() {
                                 floated="right"
                                 onClick={salvar}
                             >
-                                <Icon name="save" />
-                                Salvar
-                            </Button>
+                                 <Link to="/form-cliente" state={{id: cliente.id}} style={{color: 'green'}}> <Icon name='edit' /> </Link>
+
+                            </Button> &nbsp;
+
                         </div>
                     </div>
                 </Container>
