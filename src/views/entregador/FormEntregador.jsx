@@ -1,67 +1,78 @@
-import axios from 'axios';
+import axios from "axios";
 import React, { useState } from "react";
 import InputMask from "react-input-mask";
 import { Button, Container, Divider, Form, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import MenuSistema from "./MenuSistema"; 
+import FormCliente from './views/cliente/FormCliente';
 
-export default function FormEntregado() {
+import MenuSistema from "./MenuSistema";
+
+export default function FormEntregador() {
     const [nome, setNome] = useState("");
     const [cpf, setCpf] = useState("");
     const [dataNascimento, setDataNascimento] = useState("");
     const [foneCelular, setFoneCelular] = useState("");
     const [foneFixo, setFoneFixo] = useState("");
-    const [rg, setRg] = useState(""); 
-    const [qtEntregaRealizadas, setQtEntregaRealizadas] = useState(0);  
-    const [valorFrete, setValorFrete] = useState(0); 
-    const [enderecoRua, setEnderecoRua] = useState("");  
-    const [enderecoNumero, setEnderecoNumero] = useState("");  
-    const [enderecoBairro, setEnderecoBairro] = useState(""); 
-    const [enderecoCidade, setEnderecoCidade] = useState("");  
-    const [enderecoCep, setEnderecoCep] = useState(""); 
-    const [enderecoUf, setEnderecoUf] = useState(""); 
-    const [enderecoCompleto, setEnderecoCompleto] = useState(""); 
-    const [ativo, setAtivo] = useState(true);  // Status ativo
+    const [rg, setRg] = useState("");
+    const [qtEntregaRealizadas, setQtEntregaRealizadas] = useState(0);
+    const [valorFrete, setValorFrete] = useState(0);
+    const [enderecoRua, setEnderecoRua] = useState("");
+    const [enderecoNumero, setEnderecoNumero] = useState("");
+    const [enderecoBairro, setEnderecoBairro] = useState("");
+    const [enderecoCidade, setEnderecoCidade] = useState("");
+    const [enderecoCep, setEnderecoCep] = useState("");
+    const [enderecoUf, setEnderecoUf] = useState("");
+    const [enderecoCompleto, setEnderecoCompleto] = useState("");
+    const [ativo, setAtivo] = useState(true);
 
     function salvar() {
-        let clienteRequest = {
-            nome: nome,
-            dataNascimento: dataNascimento,
-            cpf: cpf,
-            foneCelular: foneCelular,
-            foneFixo: foneFixo,
-            rg: rg,
-            qtEntregaRealizadas: qtEntregaRealizadas,
-            valorFrete: valorFrete,
-            enderecoRua: enderecoRua,
-            enderecoNumero: enderecoNumero,
-            enderecoBairro: enderecoBairro,
-            enderecoCidade: enderecoCidade,
-            enderecoCep: enderecoCep,
-            enderecoUf: enderecoUf,
-            enderecoCompleto: enderecoCompleto,
-            ativo: ativo
+       
+        if (!nome || !cpf || !dataNascimento) { // Validação simples
+            console.error("Campos obrigatórios não preenchidos!");
+            alert("Por favor, preencha os campos obrigatórios.");
+            return;
+        }
+
+        const entregadorRequest = {
+            nome,
+            dataNascimento,
+            cpf,
+            foneCelular,
+            foneFixo,
+            rg,
+            qtEntregaRealizadas,
+            valorFrete,
+            enderecoRua,
+            enderecoNumero,
+            enderecoBairro,
+            enderecoCidade,
+            enderecoCep,
+            enderecoUf,
+            enderecoCompleto,
+            ativo,
         };
 
         axios
-            .post("http://localhost:8080/api/cliente", clienteRequest)
+            .post("http://localhost:8080/api/entregador", entregadorRequest)
             .then(() => {
-                console.log("Cliente cadastrado com sucesso.");
+                alert("Entregador cadastrado com sucesso!");
+                console.log("Entregador cadastrado com sucesso.");
             })
-            .catch(() => {
-                console.error("Erro ao incluir um cliente.");
+            .catch((error) => {
+                console.error("Erro ao incluir o entregador: ", error);
+                alert("Erro ao cadastrar o entregador. Tente novamente.");
             });
     }
 
     return (
         <div>
-            <MenuSistema tela={"cliente"} />
+            <MenuSistema tela={"entregador"} />
 
             <div style={{ marginTop: "3%" }}>
                 <Container textAlign="justified">
                     <h2>
                         <span style={{ color: "darkgray" }}>
-                            Cliente &nbsp;
+                            Entregador &nbsp;
                             <Icon name="angle double right" size="small" />
                         </span>
                         Cadastro
@@ -174,7 +185,7 @@ export default function FormEntregado() {
                                 />
                                 <Form.Input
                                     fluid
-                                    label="cep"
+                                    label="CEP"
                                     value={enderecoCep}
                                     onChange={(e) => setEnderecoCep(e.target.value)}
                                 />
@@ -198,7 +209,7 @@ export default function FormEntregado() {
                             <Form.Checkbox
                                 label="Ativo"
                                 checked={ativo}
-                                onChange={() => setAtivo(!ativo)}
+                                onChange={(e, { checked }) => setAtivo(checked)}
                             />
                         </Form>
 
@@ -211,7 +222,7 @@ export default function FormEntregado() {
                                 color="orange"
                                 floated="right"
                                 as={Link}
-                                to="/list-cliente"
+                                to="/list-entregador"
                             >
                                 <Icon name="reply" />
                                 Voltar
