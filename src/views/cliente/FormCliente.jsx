@@ -4,7 +4,7 @@ import InputMask from "react-input-mask";
 import { Button, Container, Divider, Form, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import MenuSistema from "./MenuSistema"; 
-Implemente a inclusão nas telas
+//Implemente a inclusão nas telas
 export default function FormCliente() {
     const [nome, setNome] = useState("");
     const [cpf, setCpf] = useState("");
