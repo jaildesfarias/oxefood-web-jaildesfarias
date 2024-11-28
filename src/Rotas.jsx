@@ -21,13 +21,13 @@ function Rotas() {
                 <Route path="form-cliente" element={ <FormCliente/> } />
 
                 <Route path="form-produto" element={ <FormProduto/> } />
-                <Route path="list-produto" element={ <ListProduto/> } /> {/* Corrigido a rota para ListProduto */}
+                <Route path="list-produto" element={ <ListProduto/> } /> // Corrigido a rota para ListProduto 
 
                 <Route path="form-entregador" element={ <FormEntregador/> } />
 
                 <Route path="list-entregador" element={ <ListEntregador/> } />
 
-                {/* Corrigido os erros de digitação nas rotas */}
+            // Corrigido os erros de digitação nas rotas 
                 <Route path="form-list-cliente" element={ <FormCliente/> } />
                 <Route path="form-list-produto" element={ <FormProduto/> } />
                 <Route path="form-list-entregador" element={ <FormEntregador/> } />
