@@ -1,11 +1,12 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import InputMask from "react-input-mask";
 import { Button, Container, Divider, Form, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import FormCliente from './views/cliente/FormCliente';
-
 import MenuSistema from "./MenuSistema";
+
+
 
 export default function FormEntregador() {
     const [nome, setNome] = useState("");
@@ -26,7 +27,6 @@ export default function FormEntregador() {
     const [ativo, setAtivo] = useState(true);
 
     function salvar() {
-       
         if (!nome || !cpf || !dataNascimento) { // Validação simples
             console.error("Campos obrigatórios não preenchidos!");
             alert("Por favor, preencha os campos obrigatórios.");
@@ -141,7 +141,7 @@ export default function FormEntregador() {
                                     label="Quantidade de Entregas Realizadas"
                                     type="number"
                                     value={qtEntregaRealizadas}
-                                    onChange={(e) => setQtEntregaRealizadas(e.target.value)}
+                                    onChange={(e) => setQtEntregaRealizadas(Number(e.target.value))}
                                 />
                             </Form.Group>
 
@@ -151,7 +151,7 @@ export default function FormEntregador() {
                                     label="Valor Frete"
                                     type="number"
                                     value={valorFrete}
-                                    onChange={(e) => setValorFrete(e.target.value)}
+                                    onChange={(e) => setValorFrete(Number(e.target.value))}
                                 />
                                 <Form.Input
                                     fluid
@@ -188,6 +188,7 @@ export default function FormEntregador() {
                                     label="CEP"
                                     value={enderecoCep}
                                     onChange={(e) => setEnderecoCep(e.target.value)}
+                                    mask="99999-999"
                                 />
                             </Form.Group>
 
