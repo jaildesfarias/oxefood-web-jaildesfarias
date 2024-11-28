@@ -1,41 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import InputMask from "react-input-mask";
 import { Button, Container, Divider, Form, Icon } from "semantic-ui-react";
+import MenuSistema from "./MenuSistema"; // Importe o componente MenuSistema
 import { Link } from "react-router-dom";
-import MenuSistema from "./MenuSistema"; 
-//Implemente a inclusão nas telas
-export default function FormCliente() {
-    const [nome, setNome] = useState("");
-    const [cpf, setCpf] = useState("");
-    const [dataNascimento, setDataNascimento] = useState("");
-    const [foneCelular, setFoneCelular] = useState("");
-    const [foneFixo, setFoneFixo] = useState("");
 
-    function salvar() {
-        let clienteRequest = {
-           nome:  nome,
-           dataNascimento: dataNascimento,
-           cpf:  cpf,
-           foneCelular: foneCelular,
-           foneFixo: foneFixor,
-        
-        };
+const FormCliente = ({ cliente, onSubmit }) => {
+    const [nome, setNome] = useState(cliente ? cliente.nome : "");
+    const [cpf, setCpf] = useState(cliente ? cliente.cpf : "");
+    const [dataNascimento, setDataNascimento] = useState(cliente ? cliente.dataNascimento : "");
+    const [foneCelular, setFoneCelular] = useState(cliente ? cliente.foneCelular : "");
+    const [foneFixo, setFoneFixo] = useState(cliente ? cliente.foneFixo : "");
 
-        axios
-            .post("http://localhost:8080/api/cliente", clienteRequest)
-            .then(() => {
-                console.log("Cliente cadastrado com sucesso.");
-            })
-            .catch(() => {
-                console.error("Erro ao incluir um cliente.");
-            });
-    }
+    useEffect(() => {
+        if (cliente) {
+            setNome(cliente.nome);
+            setCpf(cliente.cpf);
+            setDataNascimento(cliente.dataNascimento);
+            setFoneCelular(cliente.foneCelular);
+            setFoneFixo(cliente.foneFixo);
+        }
+    }, [cliente]);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const clienteRequest = { nome, cpf, dataNascimento, foneCelular, foneFixo };
+        onSubmit(clienteRequest);
+    };
 
     return (
         <div>
-            <MenuSistema tela={"cliente"} />
-
+            <MenuSistema tela="cliente" />
             <div style={{ marginTop: "3%" }}>
                 <Container textAlign="justified">
                     <h2>
@@ -49,7 +44,7 @@ export default function FormCliente() {
                     <Divider />
 
                     <div style={{ marginTop: "4%" }}>
-                        <Form>
+                        <Form onSubmit={handleSubmit}>
                             <Form.Group widths="equal">
                                 <Form.Input
                                     required
@@ -96,40 +91,41 @@ export default function FormCliente() {
                                     />
                                 </Form.Input>
                             </Form.Group>
+
+                            <div style={{ marginTop: "4%" }}>
+                                <Button
+                                    inverted
+                                    circular
+                                    icon
+                                    labelPosition="left"
+                                    color="orange"
+                                    floated="right"
+                                    as={Link}
+                                    to="/list-cliente"
+                                >
+                                    <Icon name="reply" />
+                                    Voltar
+                                </Button>
+
+                                <Button
+                                    inverted
+                                    circular
+                                    icon
+                                    labelPosition="left"
+                                    color="blue"
+                                    floated="right"
+                                    type="submit"
+                                >
+                                    <Icon name="save" />
+                                    Salvar
+                                </Button>
+                            </div>
                         </Form>
-
-                        <div style={{ marginTop: "4%" }}>
-                            <Button
-                                inverted
-                                circular
-                                icon
-                                labelPosition="left"
-                                color="orange"
-                                floated="right"
-                                as={Link}
-                                to="/list-cliente"
-                            >
-                                <Icon name="reply" />
-                                Voltar
-                            </Button>
-
-                            <Button
-                                inverted
-                                circular
-                                icon
-                                labelPosition="left"
-                                color="blue"
-                                floated="right"
-                                onClick={salvar}
-                            >
-                                 <Link to="/form-cliente" state={{id: cliente.id}} style={{color: 'green'}}> <Icon name='edit' /> </Link>
-
-                            </Button> &nbsp;
-
-                        </div>
                     </div>
                 </Container>
             </div>
         </div>
     );
-}
+};
+
+export default FormCliente;
