@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Button, Container, Divider, Form, Input, Message } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
 import { Link } from 'react-router-dom';
@@ -17,7 +17,7 @@ export default function FormProduto() {
 
    const [erro, setErro] = useState('');
    const { id } = useParams();
-   const history = useHistory();
+   const navigate = useNavigate();
    
    useEffect(() => {
        if (id) {
@@ -50,22 +50,20 @@ export default function FormProduto() {
        const produtoData = { ...produto };
 
        if (id) {
-           // Atualizar produto existente
            axios.put(`http://localhost:8080/api/produtos/${id}`, produtoData)
                .then(() => {
                    alert("Produto atualizado com sucesso!");
-                   history.push('/list-produto');
+                   navigate('/list-produto');
                })
                .catch((error) => {
                    console.error("Erro ao atualizar produto: ", error);
                    setErro("Erro ao atualizar produto. Tente novamente.");
                });
        } else {
-           // Criar novo produto
            axios.post('http://localhost:8080/api/produtos', produtoData)
                .then(() => {
                    alert("Produto cadastrado com sucesso!");
-                   history.push('/list-produto');
+                   navigate('/list-produto');
                })
                .catch((error) => {
                    console.error("Erro ao cadastrar produto: ", error);
