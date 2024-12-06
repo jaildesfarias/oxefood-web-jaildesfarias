@@ -30,8 +30,19 @@ export default function FormEntregador () {
                                     maxLength="100"
                                      placeholder="Informe o título do produto"
                                 />
+                                  <Form.Input required fluid label='RG'>
+                                            <InputMask 
+                                                mask="99.999.999-9"
+                                                placeholder="00.000.000-0"
+                                            />
+                                      </Input>
 
-<<<<<<< HEAD
+                                        <Form.Input
+                                            required
+                                            fluid
+                                            label='RG'
+                                            value={<InputMask mask="99.999.999-9" placeholder="00.000.000-0" />}
+                                        />
                                             <Form.Input
                                                 required
                                                 fluid
@@ -52,19 +63,34 @@ export default function FormEntregador () {
                                                  placeholder="00.000.000-0"
                                                 />
                                            </Form.Input>
-=======
+
                                 <Form.Input
                                     required
                                     fluid
                                     label='codigo de produto'>
                                         
->>>>>>> f624963e8467819ca127acd53433b547b3548ea6
+
                                          <InputMask
                                         required
                                         mask="informe o titulo do produto"
                                          placeholder="Informe o título do produto"
                                     /> 
-                                    
+                                  
+                                  <Form.Select
+                                        required
+                                        fluid
+                                        tabIndex='3'
+                                        placeholder='Selecione'
+                                        label='Categoria'
+                                        options={listaCategoria}
+                                        value={idCategoria}
+                                        onChange={(e,{value}) => {
+                                            setIdCategoria(value)
+                                        }}
+                                    />
+
+
+                                  
                                      
                                 </Form.Input>
 
@@ -92,14 +118,14 @@ export default function FormEntregador () {
 
                                 <Form.Input
                                     fluid
-<<<<<<< HEAD
+
                                     label='Tempo de Entrega Mínimo em Minuto'
                                     width={60}
-=======
+
                                      label='Tempo de Entrega Mínimo em Minuto'
                                     width={6}
->>>>>>> f624963e8467819ca127acd53433b547b3548ea6
-                                >
+>
+                               
                                     <InputMask 
                                         mask="99/99/9999" 
                                         maskChar={null}
@@ -159,5 +185,6 @@ export default function FormEntregador () {
         </div>
 
     );
+
 
 }
