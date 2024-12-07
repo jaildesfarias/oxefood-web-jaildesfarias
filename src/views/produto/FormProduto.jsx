@@ -70,10 +70,8 @@ export default function FormProduto() {
         });
     };
 
-    // Envio do formulário
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
+    // Função de salvar produto
+    const salvar = () => {
         if (!produto.codigo ||
             !produto.titulo ||
             !produto.valorUnitario ||
@@ -84,10 +82,10 @@ export default function FormProduto() {
             return;
         }
 
-        const produtoData = { ...produto, categoria: { id: idCategoria } };
+        const produtoRequest = { ...produto, categoria: { id: idCategoria } };
 
-        if (id || state?.id) {
-            axios.put(`http://localhost:8080/api/produtos/${id || state.id}`, produtoData)
+        if (id || state?.id) { // Alteração:
+            axios.put(`http://localhost:8080/api/produtos/${id || state.id}`, produtoRequest)
                 .then(() => {
                     alert("Produto atualizado com sucesso!");
                     navigate('/list-produto');
@@ -96,8 +94,8 @@ export default function FormProduto() {
                     console.error("Erro ao atualizar produto: ", error);
                     setErro("Erro ao atualizar produto. Tente novamente.");
                 });
-        } else {
-            axios.post('http://localhost:8080/api/produtos', produtoData)
+        } else { // Cadastro:
+            axios.post('http://localhost:8080/api/produtos', produtoRequest)
                 .then(() => {
                     alert("Produto cadastrado com sucesso!");
                     navigate('/list-produto');
@@ -119,7 +117,7 @@ export default function FormProduto() {
 
                     {erro && <Message negative>{erro}</Message>}
 
-                    <Form onSubmit={handleSubmit}>
+                    <Form onSubmit={(e) => { e.preventDefault(); salvar(); }}>
                         <Form.Field>
                             <label>Código</label>
                             <Input
