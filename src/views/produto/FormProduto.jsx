@@ -14,6 +14,18 @@ export default function FormProduto() {
        tempoEntregaMinimo: '',
        tempoEntregaMaximo: ''
    });
+<Form.Select
+	required
+	fluid
+	tabIndex='3'
+	placeholder='Selecione'
+	label='Categoria'
+	options={listaCategoria}
+	value={idCategoria}
+	onChange={(e,{value}) => {
+		setIdCategoria(value)
+	}}
+/>
 
    const [erro, setErro] = useState('');
    const { id } = useParams();
