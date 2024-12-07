@@ -28,7 +28,7 @@ export default function FormProduto() {
             axios.get(`http://localhost:8080/api/produtos/${id}`)
                 .then((response) => {
                     setProduto(response.data);
-                    setIdCategoria(response.data.categoria.id); // Assume que o backend retorna a categoria
+                    setIdCategoria(response.data.categoria?.id || null);
                 })
                 .catch((error) => {
                     console.error("Erro ao carregar produto: ", error);
@@ -126,4 +126,84 @@ export default function FormProduto() {
                                 onChange={handleChange}
                                 placeholder="Título do produto"
                                 required
-                  
+                            />
+                        </Form.Field>
+
+                        <Form.Field>
+                            <label>Descrição</label>
+                            <Input
+                                type="text"
+                                name="descricao"
+                                value={produto.descricao}
+                                onChange={handleChange}
+                                placeholder="Descrição do produto"
+                            />
+                        </Form.Field>
+
+                        <Form.Field>
+                            <label>Valor Unitário</label>
+                            <Input
+                                type="number"
+                                name="valorUnitario"
+                                value={produto.valorUnitario}
+                                onChange={handleChange}
+                                placeholder="Valor unitário"
+                                required
+                            />
+                        </Form.Field>
+
+                        <Form.Field>
+                            <label>Tempo de Entrega Mínimo (dias)</label>
+                            <Input
+                                type="number"
+                                name="tempoEntregaMinimo"
+                                value={produto.tempoEntregaMinimo}
+                                onChange={handleChange}
+                                placeholder="Tempo de entrega mínimo"
+                                required
+                            />
+                        </Form.Field>
+
+                        <Form.Field>
+                            <label>Tempo de Entrega Máximo (dias)</label>
+                            <Input
+                                type="number"
+                                name="tempoEntregaMaximo"
+                                value={produto.tempoEntregaMaximo}
+                                onChange={handleChange}
+                                placeholder="Tempo de entrega máximo"
+                                required
+                            />
+                        </Form.Field>
+
+                        <Form.Field>
+                            <label>Categoria</label>
+                            <Form.Select
+                                required
+                                fluid
+                                placeholder="Selecione"
+                                options={listaCategoria}
+                                value={idCategoria}
+                                onChange={(e, { value }) => setIdCategoria(value)}
+                            />
+                        </Form.Field>
+
+                        <Button
+                            type="submit"
+                            color="orange"
+                            icon="save"
+                            content="Salvar"
+                        />
+                        <Button
+                            as={Link}
+                            to="/list-produto"
+                            color="red"
+                            icon="arrow left"
+                            content="Voltar"
+                        />
+                    </Form>
+                </Container>
+            </div>
+        </div>
+    );
+}
