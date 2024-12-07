@@ -22,10 +22,41 @@ const FormCliente = ({ cliente, onSubmit }) => {
         }
     }, [cliente]);
 
+    const validarFormulario = () => {
+        const regexCPF = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
+        const regexCelular = /^\(\d{2}\) \d{5}-\d{4}$/;
+        const regexFixo = /^\(\d{2}\) \d{4}-\d{4}$/;
+        const regexDataNascimento = /^\d{2}\/\d{2}\/\d{4}$/;
+
+        if (!regexCPF.test(cpf)) {
+            alert("CPF inválido");
+            return false;
+        }
+
+        if (!regexCelular.test(foneCelular)) {
+            alert("Número de celular inválido");
+            return false;
+        }
+
+        if (!regexFixo.test(foneFixo)) {
+            alert("Número de telefone fixo inválido");
+            return false;
+        }
+
+        if (!regexDataNascimento.test(dataNascimento)) {
+            alert("Data de nascimento inválida");
+            return false;
+        }
+
+        return true;
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        const clienteRequest = { nome, cpf, dataNascimento, foneCelular, foneFixo };
-        onSubmit(clienteRequest);
+        if (validarFormulario()) {
+            const clienteRequest = { nome, cpf, dataNascimento, foneCelular, foneFixo };
+            onSubmit(clienteRequest);
+        }
     };
 
     return (
