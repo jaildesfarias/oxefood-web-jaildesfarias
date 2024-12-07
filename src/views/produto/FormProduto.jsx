@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Button, Container, Divider, Form, Input, Message } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
 import { Link } from 'react-router-dom';
@@ -21,23 +21,31 @@ export default function FormProduto() {
 
     const { id } = useParams();
     const navigate = useNavigate();
+    const { state } = useLocation();
 
-    // Buscar produto para edição
+    // Função para carregar os dados do produto
+    const carregarProduto = (produtoId) => {
+        axios.get(`http://localhost:8080/api/produtos/${produtoId}`)
+            .then((response) => {
+                setProduto(response.data);
+                setIdCategoria(response.data.categoria?.id || null);
+            })
+            .catch((error) => {
+                console.error("Erro ao carregar produto: ", error);
+                setErro("Erro ao carregar produto.");
+            });
+    };
+
+    // Carregar produto ao montar o componente ou se o `id` mudar
     useEffect(() => {
         if (id) {
-            axios.get(`http://localhost:8080/api/produtos/${id}`)
-                .then((response) => {
-                    setProduto(response.data);
-                    setIdCategoria(response.data.categoria?.id || null);
-                })
-                .catch((error) => {
-                    console.error("Erro ao carregar produto: ", error);
-                    setErro("Erro ao carregar produto.");
-                });
+            carregarProduto(id);
+        } else if (state?.id) {
+            carregarProduto(state.id);
         }
-    }, [id]);
+    }, [id, state]);
 
-    // Buscar lista de categorias
+    // Carregar lista de categorias
     useEffect(() => {
         axios.get('http://localhost:8080/api/categoria')
             .then((response) => {
@@ -54,6 +62,7 @@ export default function FormProduto() {
             });
     }, []);
 
+    // Manipulador de mudanças nos campos do formulário
     const handleChange = (e) => {
         setProduto({
             ...produto,
@@ -61,18 +70,24 @@ export default function FormProduto() {
         });
     };
 
+    // Envio do formulário
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (!produto.codigo || !produto.titulo || !produto.valorUnitario || !produto.tempoEntregaMinimo || !produto.tempoEntregaMaximo || !idCategoria) {
+        if (!produto.codigo ||
+            !produto.titulo ||
+            !produto.valorUnitario ||
+            !produto.tempoEntregaMinimo ||
+            !produto.tempoEntregaMaximo ||
+            !idCategoria) {
             setErro("Todos os campos devem ser preenchidos.");
             return;
         }
 
         const produtoData = { ...produto, categoria: { id: idCategoria } };
 
-        if (id) {
-            axios.put(`http://localhost:8080/api/produtos/${id}`, produtoData)
+        if (id || state?.id) {
+            axios.put(`http://localhost:8080/api/produtos/${id || state.id}`, produtoData)
                 .then(() => {
                     alert("Produto atualizado com sucesso!");
                     navigate('/list-produto');
@@ -99,7 +114,7 @@ export default function FormProduto() {
             <MenuSistema tela={'produto'} />
             <div style={{ marginTop: '3%' }}>
                 <Container textAlign='justified'>
-                    <h2>{id ? 'Editar Produto' : 'Novo Produto'}</h2>
+                    <h2>{id || state?.id ? 'Editar Produto' : 'Novo Produto'}</h2>
                     <Divider />
 
                     {erro && <Message negative>{erro}</Message>}
