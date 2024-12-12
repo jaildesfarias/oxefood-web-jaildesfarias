@@ -3,7 +3,11 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, Container, Divider, Icon, Table } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
+<<<<<<< HEAD
 
+=======
+//Implemente a inclusão nas telas
+>>>>>>> d3fac864ac664ceee3165b86dd3a507ffa98b468
 export default function ListCliente () {
 
    const [lista, setLista] = useState([]);
@@ -75,6 +79,7 @@ return(
                                   <Table.Cell>{cliente.foneCelular}</Table.Cell>
                                   <Table.Cell>{cliente.foneFixo}</Table.Cell>
                                   <Table.Cell textAlign='center'>
+<<<<<<< HEAD
 
                                       <Button
                                           inverted
@@ -84,6 +89,17 @@ return(
                                           icon>
                                                <Icon name='edit' />
                                       </Button> &nbsp;
+=======
+                                      <Button
+                                             inverted
+                                             circular
+                                             color='green'
+                                             title='Clique aqui para editar os dados deste cliente'
+                                             icon>
+                                                <Link to="/form-cliente" state={{id: cliente.id}} style={{color: 'green'}}> <Icon name='edit' /> </Link>
+                                          </Button> 
+                                                   &nbsp;
+>>>>>>> d3fac864ac664ceee3165b86dd3a507ffa98b468
                                       <Button
                                                inverted
                                                circular
@@ -105,4 +121,8 @@ return(
 
        </div>
    )
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> d3fac864ac664ceee3165b86dd3a507ffa98b468

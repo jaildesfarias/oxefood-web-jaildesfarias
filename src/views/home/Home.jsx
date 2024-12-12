@@ -1,11 +1,14 @@
 import React from "react";
 import { Container, Grid, Image } from 'semantic-ui-react';
 import imglogo from "../../logo-IFPE.png"
+import MenuSistema from '../../MenuSistema';
+
 
 export default function Home () {
 
    return(
        <div>
+             <MenuSistema tela={'cliente'} />
 
            <div style={{marginTop: '5%'}}>
                <Container>
