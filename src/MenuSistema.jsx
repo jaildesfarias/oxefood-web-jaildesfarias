@@ -55,7 +55,6 @@ export default function MenuSistema(props) {
                    to="/list-entregador"
                />
                
-               {/* Adicionando Menu de Vendas */}
                <Menu.Item
                    content="Venda"
                    active={props.tela === "venda"}
