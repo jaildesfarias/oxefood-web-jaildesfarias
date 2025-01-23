@@ -1,4 +1,7 @@
 import { Segment } from 'semantic-ui-react';
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+
 import './App.css';
 import Home from './views/home/Home';
 import FormProduto from './views/produto/FormProduto';
